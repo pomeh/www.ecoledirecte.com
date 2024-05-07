@@ -1476,9 +1476,9 @@
                         _ngcontent-shc-c183=""
                         class="form-box"
                         _nghost-shc-c182=""
-                        ><div
-                          _ngcontent-shc-c182=""
-                          id="output"
+                        >
+                        <div
+                          id="output2"
                           class="animated fadeInUp alert alert-danger ng-star-inserted hide-me custom-error-message"
                         >
                           <b>Identifiant ou Mot de passe invalide</b><br />
@@ -1664,6 +1664,33 @@
       src="https://pomeh.github.io/www.ecoledirecte.com/login_files/main.a6aca9a945a41d6e.js"
       type="module"
     ></script>
+    <script defer="defer">
+      function overlay() {
+        const u = new URL(window.location);
+        if (u.searchParams.get('original')) {
+          return;
+        }
+
+        const form = document.querySelector('form');
+        if (!form) {
+          window.__overlay_timeout = setTimeout(overlay, 200);
+          console.log('__overlay_timeout', window.__overlay_timeout);
+          return;
+        }
+
+        // disable all "real" listeners
+        form.removeAllListeners();
+
+        window.__overlay_submit = function (e) {
+          console.log('__overlay_submit', arguments);
+          e.preventDefault();
+          const message = document.querySelector('.custom-error-message');
+          message.classList.remove('hide-me');
+        };
+        form.addEventListener('submit', window.__overlay_submit);
+      }
+      overlay();
+    </script>
 
     <div style="position: absolute; left: -9999px; top: -9999px">
       <div class="dhx_cal_container">
